@@ -1,0 +1,94 @@
+链表是有序的列表，但它采用链式存储结构，也就是说节点之间不一定按照顺序存储
+链表是以节点的方式来存储的，每个节点包含两个部分：Data 和 Next Data用来储存当前节点的值，Next用来储存下一个节点的地址
+链表分为有头节点的链表和没有头结点的链表
+头节点 head不存放数据，只用于表示单链表的头部next
+每添加一个节点，就直接加在链表的尾部
+遍历时，通过一个辅助变量，遍历整个链表
+
+代码:
+class Node:
+    def __init__(self, item):
+        self.item = item
+        self.next = None
+
+
+class SingleLinkedList:
+    def __init__(self):
+        self._head = None
+
+    def add(self, item):
+        # 在链表头部插入元素
+        node = Node(item)
+        node.next = self._head
+        self._head = node
+
+    def is_empty(self):
+        #判断链表是否为空
+        return self._head is None
+
+    def append(self, item):
+        # 在链表尾部插入元素
+        node = Node(item)
+        cur = self._head
+        while cur.next is not None:
+            cur = cur.next
+        cur.next = node
+
+    def length(self):
+        # 计算链表的长度
+        count = 0
+        cur = self._head
+        while cur.next is not None:
+            cur = cur.next
+            count += 1
+        return count+1
+
+    def search(self, item):
+        # 在链表中查找某个元素出现的第一个位置，返回(index, item)
+        cur = self._head
+        count = 0
+        while cur.next is not None:
+            if cur.item == item:
+                return (count, item)
+            else:
+                count += 1
+                cur = cur.next
+
+    def insert(self, item, index):
+        # 在特定的位置插入元素
+        if index<0:
+            self.add(item)
+        elif index>self.length():
+            self.append(item)
+        else:
+            count = 0
+            cur = self._head
+            while count < index-1:
+                count += 1
+                cur = cur.next
+            node = Node(item)
+            node.next = cur.next
+            cur.next = node
+
+    def show(self):
+        cur = self._head
+        while cur is not None:
+            print(cur.item, end=' ')
+            cur = cur.next
+
+    def remove(self, item):
+        # 删除某个元素,如果有多个，只删除第一个
+        pass
+
+
+if __name__ == '__main__':
+    s = SingleLinkedList()
+    s.add(1)
+    s.append(2)
+    s.add(9)
+    s.append(4)
+    s.show()
+    a = s.search(1)
+    s.insert(3, 1)
+    print()
+    s.show()
