@@ -71,14 +71,30 @@ class SingleLinkedList:
             cur.next = node
 
     def show(self):
+        if self._head is None:
+            print('链表为空')
+            return
         cur = self._head
         while cur is not None:
             print(cur.item, end=' ')
             cur = cur.next
-
+        print()
     def remove(self, item):
         # 删除某个元素,如果有多个，只删除第一个
-        pass
+        if self.is_empty():
+            print('链表为空，不能删除')
+        elif self._head.item == item:
+            self._head = self._head.next
+        else:
+            pre = None
+            cur = self._head
+            while cur is not None:
+                if cur.item == item:
+                    pre.next = cur.next
+                    return
+                else:
+                    pre = cur
+                    cur = cur.next
 
 
 if __name__ == '__main__':
@@ -90,5 +106,35 @@ if __name__ == '__main__':
     s.show()
     a = s.search(1)
     s.insert(3, 1)
-    print()
     s.show()
+    s.remove(4)
+    s.show()
+
+
+单链表面试题
+1. 求解单链表有效节点个数
+   def getLength(singleList): -> int
+        return singleList.count()
+2. 查找单链表中倒数第k个节点
+    思想：设置两个辅助指针，将两个指针看做一把尺子，指针1，也就是尺子尾部，先走k-1次,然后指针1和指针2各走一次，这样两个指针中间的距离就为k，
+    然后两个指针一起往前遍历，当指针2达到队尾的时候，指针1所在的位置就是倒数第k个元素
+    代码:
+    class Node:
+        def __init__(self, value, next):
+            self.value = value
+            self.next = next
+    
+    class Solution:
+        def k_to_tail(self, head, k):
+            if self.head == None or k<0:
+                return None
+            elif:
+                p = head
+                q = head
+                for i in range(k-1):
+                    if q.next is not None:
+                        q = q.next
+                while q.next is not None:
+                    q = q.next
+                    p = p.next
+                return q
